@@ -1,0 +1,62 @@
+html,
+body {
+    overflow: hidden;
+}
+
+.tr-logo img {
+    height: 36px;
+}
+
+.tr-content-header {
+    justify-content: flex-end;
+}
+
+.tr-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tr-photo {
+    height: 100px;
+}
+
+.tr-btn-form {
+    padding: 4px 50px;
+    margin: 0 2px;
+}
+
+.tr-btn-table {
+    font-size: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.tr-table tbody th {
+    font-family: -apple-system, BlinkMacSystemFont, "Inter UI", Roboto, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #8392a5;
+}
+
+.table-hover {
+    cursor: pointer;
+}
+
+.tr-fixed-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+.tr-fixed-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tr-custom-file-label {
+    white-space: nowrap;
+    overflow: hidden;
+}

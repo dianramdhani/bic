@@ -1,0 +1,51 @@
+<aside class="aside aside-fixed">
+    <div class="aside-header">
+        <a href="" class="aside-logo tr-logo"><img src="../../img/logo-horizontal.png" alt=""></a>
+        <a href="" class="aside-menu-link">
+            <i data-feather="menu"></i>
+            <i data-feather="x"></i>
+        </a>
+    </div>
+    <div id="navbarMenu" class="aside-body">
+        <ul class="nav nav-aside">
+            <li class="nav-label" ng-repeat-start="menu in $ctrl.menu.sidebar track by $index"
+                ng-if="($index === 0) && (menu.type === 'title')">{{menu.label}}</li>
+            <li class="nav-label mg-t-25" ng-if="($index !== 0) && (menu.type === 'title')">{{menu.label}}</li>
+            <li class="nav-item" ng-if="menu.type === 'link'" ng-class="{active: menu.active}" ng-repeat-end>
+                <a href="" class="nav-link" ng-click="goToState($index)">
+                    <i data-feather="{{menu.icon}}"></i> <span>{{menu.label}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+<div class="content ht-100v pd-0">
+    <div class="content-header tr-content-header">
+        <div class="dropdown dropdown-profile">
+            <a href="" class="dropdown-link" data-toggle="dropdown" data-display="static">
+                <div class="avatar avatar-sm">
+                    <img src="../../img/user.png" class="rounded-circle" alt="">
+                </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right tx-13">
+                <div class="tr-profile">
+                    <div class="avatar avatar-lg mg-b-15">
+                        <img src="../../img/user.png" class="rounded-circle" alt="">
+                    </div>
+                    <h6 class="tx-semibold mg-b-5">Admin CEP</h6>
+                    <p class="mg-b-10 tx-12 tx-color-03">Administrator</p>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="" class="dropdown-item"><i data-feather="settings"></i>Account Settings</a>
+                <a href="" class="dropdown-item" ng-click="logout()"><i data-feather="log-out"></i>Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <div class="container-fluid pd-x-0">
+            <div ui-view></div>
+        </div>
+    </div>
+</div>
