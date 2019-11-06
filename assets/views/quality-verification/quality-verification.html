@@ -7,12 +7,22 @@
         </ol>
     </nav>
 </div>
-<form name="formQualityVerification" ng-submit="upload()">
-    <label for="imgFile">Image: </label>
-    <input type="file" name="imgFile" accept="image/x-png,image/jpeg" ng-model="imgFile" tr-files required>
-    <button type="submit">Upload</button>
-</form>
-<div ng-if="_imgFile">
-    <h6>Standard Image: </h6>
-    <img ng-src="{{_imgFile}}">
+<p>
+    <h2>Upload Data</h2>
+    <form name="formQualityVerification" ng-submit="upload()">
+        <label for="imgFile">Image: </label>
+        <input type="file" name="imgFile" accept="image/x-png,image/jpeg" ng-model="imgFile" tr-files required>
+        <button type="submit">Upload</button>
+    </form>
+</p>
+<div ng-show="_imgFile">
+    <p>
+        <h2>Image</h2>
+        <img ng-src="{{_imgFile}}">
+    </p>
+    <p>
+        <h2>List of Data</h2>
+        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance">
+        </table>
+    </p>
 </div>

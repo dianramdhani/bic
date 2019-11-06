@@ -1,4 +1,4 @@
-window.app = angular.module('BIC', ['ui.router', 'ngCookies']);
+window.app = angular.module('BIC', ['ui.router', 'ngCookies', 'datatables']);
 
 // RUN
 (function () {
@@ -25,6 +25,7 @@ window.app = angular.module('BIC', ['ui.router', 'ngCookies']);
 
 // SERVICES
 require('../services/container-rest.service');
+require('../services/util.service');
 
 // ROUTES
 require('../routes/app.route');
@@ -35,6 +36,7 @@ require('../directives/tr-files.directive');
 
 // COMPONENTS
 require('../components/tr-wrapper/tr-wrapper');
+require('../components/tr-loading/tr-loading');
 
 // VIEWS
 require('../views/user-container/user-container');
