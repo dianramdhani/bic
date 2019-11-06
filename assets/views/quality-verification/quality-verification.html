@@ -18,10 +18,12 @@
         <button class="btn btn-primary" type="submit">Upload</button>
     </form>
 </p>
-<p ng-show="_imgFile">
-    <h2>Image</h2>
-    <img ng-src="{{_imgFile}}">
-</p>
+<div ng-show="_imgFile">
+    <p>
+        <h2>Image</h2>
+        <img ng-src="{{_imgFile}}">
+    </p>
+</div>
 <p>
     <h2>List of Data</h2>
     <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance">

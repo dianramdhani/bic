@@ -9,6 +9,7 @@
         this.findUrl = findUrl;
         this.enter = enter;
         this.update = update;
+        this.imageUrl = imageUrl;
 
         const url = CONFIG.API;
 
@@ -27,6 +28,10 @@
 
         function update({ data }) {
             return $http.put(`${url}/container`, data);
+        }
+
+        function imageUrl({ id }) {
+            return `${url}/image/${id}.png`;
         }
     }
 })();

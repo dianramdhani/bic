@@ -52,6 +52,8 @@
                 .withOption('language', { search: 'Date' })
                 .withPaginationType('simple_numbers');
             $scope.dtColumns = [
+                DTColumnBuilder.newColumn('id').withTitle('')
+                    .renderWith((data, _, __, ___) => `<img src="${ContainerRestService.imageUrl({ id: data })}" alt="" style="height: 200px">`),
                 DTColumnBuilder.newColumn('date').withTitle('Date')
                     .renderWith((data, _, __, ___) => (new Date(data)).toString()),
                 DTColumnBuilder.newColumn('code').withTitle('Code'),
