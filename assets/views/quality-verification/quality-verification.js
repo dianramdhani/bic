@@ -10,9 +10,14 @@
             controller: _
         });
 
-    _.$inject = ['$scope', '$compile', '$element', 'DTOptionsBuilder', 'DTColumnBuilder', 'ContainerRestService', 'UtilService'];
-    function _($scope, $compile, $element, DTOptionsBuilder, DTColumnBuilder, ContainerRestService, UtilService) {
-        let $ctrl = this;
+    _.$inject = ['$scope', '$compile', '$element', '$timeout', 'DTOptionsBuilder', 'DTColumnBuilder', 'ContainerRestService', 'UtilService'];
+    function _($scope, $compile, $element, $timeout, DTOptionsBuilder, DTColumnBuilder, ContainerRestService, UtilService) {
+        const
+            stringify = (o) => JSON.stringify(o).replace(/"/g, '@').replace(/\\n/g, '#'),
+            parse = (s) => JSON.parse(s.replace(/@/g, '"').replace(/#/, '\\n'));
+
+        let $ctrl = this,
+            modalEdit;
         $ctrl.$onInit = () => {
             $scope.dtOptions = DTOptionsBuilder.newOptions()
                 .withOption('ajax', {
@@ -50,8 +55,14 @@
                 DTColumnBuilder.newColumn('date').withTitle('Date')
                     .renderWith((data, _, __, ___) => (new Date(data)).toString()),
                 DTColumnBuilder.newColumn('code').withTitle('Code'),
+                DTColumnBuilder.newColumn(null).withTitle('').notSortable().withClass('text-right')
+                    .renderWith((data, _, __, ___) => `<button class="btn btn-primary tr-btn-table" ng-click="openEdit('${stringify(data)}')">Edit</button>`)
             ];
             $scope.dtInstance = {};
+
+            $timeout(() => {
+                modalEdit = $element.find('#modalEdit');
+            });
         };
 
         $scope.upload = () => {
@@ -62,6 +73,18 @@
                 $scope.$apply();
                 angular.element('.content-body').animate({ scrollTop: $element.find('table').offset().top }, 350);
             });
+        };
+
+        $scope.openEdit = (data) => {
+            $scope.dataEdit = parse(data);
+            modalEdit.modal({ show: true });
+        };
+
+        $scope.edit = async () => {
+            await ContainerRestService.update({ data: $scope.dataEdit });
+            $scope.dtInstance.reloadData();
+            $scope.$apply();
+            modalEdit.modal('hide');
         };
     }
 })();

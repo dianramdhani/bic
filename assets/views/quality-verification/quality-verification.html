@@ -9,20 +9,43 @@
 </div>
 <p>
     <h2>Upload Data</h2>
-    <form name="formQualityVerification" ng-submit="upload()">
-        <label for="imgFile">Image: </label>
-        <input type="file" name="imgFile" accept="image/x-png,image/jpeg" ng-model="imgFile" tr-files required>
-        <button type="submit">Upload</button>
+    <form class="wd-md-30p" name="formQualityVerification" ng-submit="upload()">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="imgFile" accept="image/x-png,image/jpeg" ng-model="imgFile"
+                tr-files required>
+            <label class="custom-file-label" for="imgFile">Choose image</label>
+        </div>
+        <button class="btn btn-primary" type="submit">Upload</button>
     </form>
 </p>
-<div ng-show="_imgFile">
-    <p>
-        <h2>Image</h2>
-        <img ng-src="{{_imgFile}}">
-    </p>
-    <p>
-        <h2>List of Data</h2>
-        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance">
-        </table>
-    </p>
+<p ng-show="_imgFile">
+    <h2>Image</h2>
+    <img ng-src="{{_imgFile}}">
+</p>
+<p>
+    <h2>List of Data</h2>
+    <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance">
+    </table>
+</p>
+
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form name="formEdit" class="modal-content tx-14" ng-submit="edit()">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel2">Edit Data</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="code" class="col-form-label">Code:</label>
+                    <input type="text" class="form-control" id="code" ng-model="dataEdit.code">
+                </div>
+            </div>
+            <div class=" modal-footer">
+                <button type="submit" class="btn btn-primary tx-13">Save</button>
+            </div>
+        </form>
+    </div>
 </div>

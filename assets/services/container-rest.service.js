@@ -8,6 +8,7 @@
     function ContainerRestService($http, CONFIG) {
         this.findUrl = findUrl;
         this.enter = enter;
+        this.update = update;
 
         const url = CONFIG.API;
 
@@ -22,6 +23,10 @@
                 transformResponse: angular.identity,
                 headers: { 'Content-Type': undefined }
             });
+        }
+
+        function update({ data }) {
+            return $http.put(`${url}/container`, data);
         }
     }
 })();
