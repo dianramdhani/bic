@@ -28,7 +28,7 @@
                     // },
                     {
                         type: 'link',
-                        label: 'Quality Verification',
+                        label: 'BIC Code Recognition',
                         icon: 'monitor',
                         state: {
                             to: 'user.qualityVerification',

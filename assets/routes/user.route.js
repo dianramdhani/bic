@@ -8,7 +8,7 @@
 
     function UserRoute($stateProvider) {
         [
-            { name: 'user.qualityVerification', url: 'quality-verification', component: 'qualityVerification' },
+            { name: 'user.qualityVerification', url: 'bic-code-recognition', component: 'qualityVerification' },
         ]
             .forEach(state => $stateProvider.state(state));
     }
