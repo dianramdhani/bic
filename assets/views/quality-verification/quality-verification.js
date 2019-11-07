@@ -12,12 +12,20 @@
 
     _.$inject = ['$scope', '$compile', '$element', '$timeout', 'DTOptionsBuilder', 'DTColumnBuilder', 'ContainerRestService', 'UtilService'];
     function _($scope, $compile, $element, $timeout, DTOptionsBuilder, DTColumnBuilder, ContainerRestService, UtilService) {
+        let $ctrl = this,
+            modalEdit,
+            modalViewImage;
+
         const
             stringify = (o) => JSON.stringify(o).replace(/"/g, '@').replace(/\\n/g, '#'),
-            parse = (s) => JSON.parse(s.replace(/@/g, '"').replace(/#/, '\\n'));
-
-        let $ctrl = this,
-            modalEdit;
+            parse = (s) => JSON.parse(s.replace(/@/g, '"').replace(/#/, '\\n')),
+            imageLoaderReset = () => {
+                const el = $element.find('#imageLoader');
+                if (!el.is(':empty')) {
+                    el.empty();
+                }
+                el.append($compile(`<image-loader upload="upload({imgFile})"></image-loader>`)($scope));
+            };
         $ctrl.$onInit = () => {
             $scope.dtOptions = DTOptionsBuilder.newOptions()
                 .withOption('ajax', {
@@ -47,13 +55,13 @@
                 .withOption('serverSide', true)
                 .withOption('searching', false)
                 .withOption('lengthMenu', [10, 20, 30])
-                .withOption('order', [[0, 'desc']])
+                .withOption('order', [[1, 'desc']])
                 .withOption('createdRow', (row, _, __) => { $compile(angular.element(row).contents())($scope); })
                 .withOption('language', { search: 'Date' })
                 .withPaginationType('simple_numbers');
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn('id').withTitle('')
-                    .renderWith((data, _, __, ___) => `<img src="${ContainerRestService.imageUrl({ id: data })}" alt="" style="height: 200px">`),
+                DTColumnBuilder.newColumn(null).withTitle('')
+                    .renderWith((data, _, __, ___) => `<img src="${ContainerRestService.imageUrl({ id: data.id })}" alt="" style="height: 100px" ng-click="openImg('${stringify(data)}')">`),
                 DTColumnBuilder.newColumn('date').withTitle('Date')
                     .renderWith((data, _, __, ___) => (new Date(data)).toString()),
                 DTColumnBuilder.newColumn('code').withTitle('Code'),
@@ -64,16 +72,19 @@
 
             $timeout(() => {
                 modalEdit = $element.find('#modalEdit');
+                modalViewImage = $element.find('#modalViewImage');
+                imageLoaderReset();
             });
         };
 
-        $scope.upload = () => {
+        $scope.upload = ({ imgFile }) => {
             UtilService.trLoadingProcess(async () => {
-                await ContainerRestService.enter({ file: $scope.imgFile });
-                $scope._imgFile = window.URL.createObjectURL($scope.imgFile[0]);
+                const { data } = await ContainerRestService.enter({ file: imgFile });
                 $scope.dtInstance.reloadData();
+                imageLoaderReset();
                 $scope.$apply();
                 angular.element('.content-body').animate({ scrollTop: $element.find('table').offset().top }, 350);
+                $timeout(() => $scope.openImg(stringify(JSON.parse(data))));
             });
         };
 
@@ -88,5 +99,11 @@
             $scope.$apply();
             modalEdit.modal('hide');
         };
+
+        $scope.openImg = (data) => {
+            $scope.imgView = parse(data);
+            $scope.imgView['imgUrl'] = ContainerRestService.imageUrl({ id: $scope.imgView.id });
+            modalViewImage.modal({ show: true });
+        }
     }
 })();

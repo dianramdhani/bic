@@ -7,28 +7,14 @@
         </ol>
     </nav>
 </div>
-<p>
-    <h2>Upload Data</h2>
-    <form class="wd-md-30p" name="formQualityVerification" ng-submit="upload()">
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="imgFile" accept="image/x-png,image/jpeg" ng-model="imgFile"
-                tr-files required>
-            <label class="custom-file-label" for="imgFile">Choose image</label>
-        </div>
-        <button class="btn btn-primary" type="submit">Upload</button>
-    </form>
-</p>
-<div ng-show="_imgFile">
-    <p>
-        <h2>Image</h2>
-        <img ng-src="{{_imgFile}}">
-    </p>
+<div id="imageLoader"></div>
+<div class="card mg-t-10">
+    <h6 class="card-header pd-t-20 pd-b-0 bd-b-0">List of Data</h6>
+    <div class="card-body pd-20 ">
+        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance">
+        </table>
+    </div>
 </div>
-<p>
-    <h2>List of Data</h2>
-    <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance">
-    </table>
-</p>
 
 <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -49,5 +35,35 @@
                 <button type="submit" class="btn btn-primary tx-13">Save</button>
             </div>
         </form>
+    </div>
+</div>
+<div class="modal fade" id="modalViewImage" tabindex="-1" role="dialog" aria-labelledby="modalViewImage"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel2">Show Image</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="img-fluid" ng-src="{{imgView.imgUrl}}">
+                <div class="table-responsive">
+                    <table class="table table-dashboard mg-b-0 tr-fixed-table">
+                        <tbody>
+                            <tr>
+                                <th>Date</th>
+                                <td class="text-right ng-binding">{{imgView.date | date : 'medium'}}</td>
+                            </tr>
+                            <tr>
+                                <th>Code</th>
+                                <td class="text-right ng-binding">{{imgView.code}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
