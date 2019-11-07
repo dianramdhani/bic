@@ -1,3 +1,5 @@
+require('./quality-verification.css');
+
 (function () {
     'use strict';
 
@@ -10,8 +12,8 @@
             controller: _
         });
 
-    _.$inject = ['$scope', '$compile', '$element', '$timeout', 'DTOptionsBuilder', 'DTColumnBuilder', 'ContainerRestService', 'UtilService'];
-    function _($scope, $compile, $element, $timeout, DTOptionsBuilder, DTColumnBuilder, ContainerRestService, UtilService) {
+    _.$inject = ['$scope', '$compile', '$element', '$timeout', '$filter', 'DTOptionsBuilder', 'DTColumnBuilder', 'ContainerRestService', 'UtilService'];
+    function _($scope, $compile, $element, $timeout, $filter, DTOptionsBuilder, DTColumnBuilder, ContainerRestService, UtilService) {
         let $ctrl = this,
             modalEdit,
             modalViewImage;
@@ -63,9 +65,9 @@
                 DTColumnBuilder.newColumn(null).withTitle('')
                     .renderWith((data, _, __, ___) => `<img src="${ContainerRestService.imageUrl({ id: data.id })}" alt="" style="height: 100px" ng-click="openImg('${stringify(data)}')">`),
                 DTColumnBuilder.newColumn('date').withTitle('Date')
-                    .renderWith((data, _, __, ___) => (new Date(data)).toString()),
+                    .renderWith((data, _, __, ___) => $filter('date')(data, 'medium')),
                 DTColumnBuilder.newColumn('code').withTitle('Code'),
-                DTColumnBuilder.newColumn(null).withTitle('').notSortable().withClass('text-right')
+                DTColumnBuilder.newColumn(null).withTitle('').notSortable().withClass('text-center wd-50')
                     .renderWith((data, _, __, ___) => `<button class="btn btn-primary tr-btn-table" ng-click="openEdit('${stringify(data)}')">Edit</button>`)
             ];
             $scope.dtInstance = {};
