@@ -346,7 +346,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/c
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"quality-verification .dataTable {\\r\\n    width: 750px;\\r\\n    margin-left: 0;\\r\\n}\", \"\"]);\n\n\n//# sourceURL=webpack:///./assets/views/quality-verification/quality-verification.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"/* quality-verification .dataTable {\\r\\n    width: 750px;\\r\\n    margin-left: 0;\\r\\n} */\", \"\"]);\n\n\n//# sourceURL=webpack:///./assets/views/quality-verification/quality-verification.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
