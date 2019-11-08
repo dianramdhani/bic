@@ -1,5 +1,5 @@
-quality-verification .dataTable {
-    /* width: 750px;
-    margin-left: 0; */
-    padding: 0 10px;
+@media (min-width: 1200px) {
+    quality-verification .dataTable {
+        width: 98%;
+    }
 }
