@@ -1,4 +1,5 @@
-/* quality-verification .dataTable {
-    width: 750px;
-    margin-left: 0;
-} */
+quality-verification .dataTable {
+    /* width: 750px;
+    margin-left: 0; */
+    padding: 0 10px;
+}
