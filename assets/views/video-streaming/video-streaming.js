@@ -59,11 +59,14 @@
                     .withOption('language', { search: 'Date' })
                     .withPaginationType('simple_numbers');
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).withTitle('')
+                    DTColumnBuilder.newColumn(null).withTitle('Image').notSortable()
                         .renderWith((data, _, __, ___) => `<img src="${ContainerRestService.imageUrl({ id: data.id })}" style="height: 100px">`),
-                    DTColumnBuilder.newColumn('date').withTitle('Date')
-                        .renderWith((data, _, __, ___) => $filter('date')(data, 'medium')),
-                    DTColumnBuilder.newColumn('code').withTitle('Code')
+                    DTColumnBuilder.newColumn(null).withTitle('Date / Code').notSortable()
+                        .renderWith((data, _, __, ___) => `
+                            ${$filter('date')(data.date, 'medium')}
+                            <br>
+                            ${data.code}
+                        `)
                 ];
                 $scope.dtInstance = {};
             };

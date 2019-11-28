@@ -62,7 +62,7 @@ require('./quality-verification.css');
                 .withOption('language', { search: 'Date' })
                 .withPaginationType('simple_numbers');
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).withTitle('')
+                DTColumnBuilder.newColumn(null).withTitle('Image')
                     .renderWith((data, _, __, ___) => `<img src="${ContainerRestService.imageUrl({ id: data.id })}" alt="" style="height: 100px" ng-click="openImg('${stringify(data)}')">`),
                 DTColumnBuilder.newColumn('date').withTitle('Date')
                     .renderWith((data, _, __, ___) => $filter('date')(data, 'medium')),
