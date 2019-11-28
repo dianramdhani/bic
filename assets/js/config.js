@@ -3,6 +3,6 @@
 
     window.app
         .constant('CONFIG', {
-            API: 'http://apps.tritronik.com/bic'
+            API: 'http://vision-dev.tritronik.com:8084'
         });
 })();

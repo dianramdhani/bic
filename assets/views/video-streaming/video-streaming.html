@@ -1,0 +1,43 @@
+<div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+    <h4 class="mg-b-0 tx-spacing--1">Video Streaming</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-style1 mg-b-10">
+            <li class="breadcrumb-item">Home</li>
+            <li class="breadcrumb-item active" aria-current="page">Video Streaming</li>
+        </ol>
+    </nav>
+</div>
+<div class="row row-xs">
+    <div class="col-lg-5">
+        <div class="card">
+            <h6 class="card-header pd-t-20 pd-b-0 bd-b-0">Video Capture</h6>
+            <div class="card-body">
+                <form name="formVideoStream" class="form-inline mg-b-10" ng-submit="toggle()">
+                    <div class="form-group mg-r-20">
+                        <label class="mg-r-10" for="path">Path</label>
+                        <input type="text" class="form-control" id="path" name="path" required ng-model="form.path">
+                    </div>
+                    <div class="custom-control custom-switch mg-r-20">
+                        <input type="checkbox" class="custom-control-input" id="save" name="save" ng-model="form.save">
+                        <label class="custom-control-label" for="save">Save</label>
+                    </div>
+                    <button type="submit" class="btn"
+                        ng-class="{ 'btn-primary': !start, 'btn-danger': start }">{{start? 'Stop': 'Start'}}</button>
+                </form>
+                <img class="img-fluid" ng-src="{{videoFrameUrl}}">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7 mg-t-10 mg-lg-t-0">
+        <div class="card">
+            <h6 class="card-header pd-t-20 pd-b-0 bd-b-0">List of Data</h6>
+            <div class="card-body pd-20">
+                <div class="table-responsive">
+                    <table class="table" datatable="" dt-options="dtOptions" dt-columns="dtColumns"
+                        dt-instance="dtInstance">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

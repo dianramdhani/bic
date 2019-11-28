@@ -26,6 +26,7 @@ window.app = angular.module('BIC', ['ui.router', 'ngCookies', 'datatables']);
 // SERVICES
 require('../services/container-rest.service');
 require('../services/util.service');
+require('../services/video-rest.service');
 
 // ROUTES
 require('../routes/app.route');
@@ -42,3 +43,4 @@ require('../components/tr-loading/tr-loading');
 require('../views/user-container/user-container');
 require('../views/quality-verification/quality-verification');
 require('../views/quality-verification/image-loader/image-loader');
+require('../views/video-streaming/video-streaming');

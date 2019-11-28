@@ -36,6 +36,16 @@
                         },
                         active: true
                     },
+                    {
+                        type: 'link',
+                        label: 'Video Streaming',
+                        icon: 'monitor',
+                        state: {
+                            to: 'user.videoStreaming',
+                            params: {}
+                        },
+                        active: false
+                    },
                 ]
             };
 
