@@ -34,7 +34,7 @@
                             to: 'user.qualityVerification',
                             params: {}
                         },
-                        active: false
+                        active: true
                     },
                     {
                         type: 'link',
@@ -44,7 +44,7 @@
                             to: 'user.videoStreaming',
                             params: {}
                         },
-                        active: true
+                        active: false
                     },
                 ]
             };

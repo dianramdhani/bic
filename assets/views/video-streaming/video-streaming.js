@@ -10,8 +10,8 @@
             controller: _,
         });
 
-    _.$inject = ['$scope', '$interval', '$compile', '$filter', 'DTOptionsBuilder', 'DTColumnBuilder', 'VideoRestService', 'ContainerRestService', 'UtilService'];
-    function _($scope, $interval, $compile, $filter, DTOptionsBuilder, DTColumnBuilder, VideoRestService, ContainerRestService, UtilService) {
+    _.$inject = ['$scope', '$interval', '$compile', '$filter', '$timeout', 'DTOptionsBuilder', 'DTColumnBuilder', 'VideoRestService', 'ContainerRestService', 'UtilService'];
+    function _($scope, $interval, $compile, $filter, $timeout, DTOptionsBuilder, DTColumnBuilder, VideoRestService, ContainerRestService, UtilService) {
         const
             videoInit = () => {
                 $scope.start = false;
@@ -72,18 +72,19 @@
         };
 
         $scope.toggle = () => {
-            $scope.form['processingInterval'] = 1000;
+            $scope.form['processingInterval'] = 500;
             $scope.start = !$scope.start;
             if ($scope.start) {
                 UtilService.trLoadingProcess(async () => {
-                    await VideoRestService.start({ path: $scope.form.path, save: $scope.form.save, processingInterval: $scope.form.processingInterval });
-                    $scope.videoFrameUrl = VideoRestService.getFrameUrl();
-                    interval = $interval(() => {
-                        $scope.videoFrameUrl = VideoRestService.getFrameUrl();
-                        if ($scope.form.save) {
-                            $scope.dtInstance.reloadData();
-                        }
-                    }, $scope.form.processingInterval);
+                    await $timeout(async () => {
+                        await VideoRestService.start({ path: $scope.form.path, save: $scope.form.save, processingInterval: $scope.form.processingInterval });
+                        interval = $interval(async () => {
+                            $scope.videoFrameUrl = VideoRestService.getFrameUrl();
+                            if ($scope.form.save) {
+                                $scope.dtInstance.reloadData();
+                            }
+                        }, $scope.form.processingInterval);
+                    }, 1000);
                 });
             } else {
                 VideoRestService.stop();
