@@ -10,17 +10,20 @@
             controller: _,
         });
 
-    _.$inject = ['$scope', '$interval', '$compile', '$filter', '$timeout', 'DTOptionsBuilder', 'DTColumnBuilder', 'VideoRestService', 'ContainerRestService', 'UtilService'];
-    function _($scope, $interval, $compile, $filter, $timeout, DTOptionsBuilder, DTColumnBuilder, VideoRestService, ContainerRestService, UtilService) {
+    _.$inject = ['$scope', '$interval', '$compile', '$filter', '$timeout', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'VideoRestService', 'ContainerRestService', 'UtilService'];
+    function _($scope, $interval, $compile, $filter, $timeout, $http, DTOptionsBuilder, DTColumnBuilder, VideoRestService, ContainerRestService, UtilService) {
         const
+            delay = 500,
             videoInit = () => {
-                $scope.start = false;
+                $scope.start = true;
                 $scope.videoFrameUrl = '';
                 $scope.form = {
                     path: '',
                     save: false
                 };
-                VideoRestService.stop();
+                interval = $interval(async () => {
+                    $scope.videoFrameUrl = VideoRestService.getFrameUrl();
+                }, delay);
             },
             tableInit = () => {
                 $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -71,25 +74,26 @@
             tableInit();
         };
 
-        $scope.toggle = () => {
-            $scope.form['processingInterval'] = 500;
-            $scope.start = !$scope.start;
-            if ($scope.start) {
-                UtilService.trLoadingProcess(async () => {
-                    await $timeout(async () => {
-                        await VideoRestService.start({ path: $scope.form.path, save: $scope.form.save, processingInterval: $scope.form.processingInterval });
-                        interval = $interval(async () => {
-                            $scope.videoFrameUrl = VideoRestService.getFrameUrl();
-                            if ($scope.form.save) {
-                                $scope.dtInstance.reloadData();
-                            }
-                        }, $scope.form.processingInterval);
-                    }, 1000);
-                });
-            } else {
-                VideoRestService.stop();
-                $interval.cancel(interval);
-            }
+        $scope.play = () => {
+            UtilService.trLoadingProcess(async () => {
+                $scope.form['processingInterval'] = delay;
+                await $timeout(async () => {
+                    await VideoRestService.start({ path: $scope.form.path, save: $scope.form.save, processingInterval: $scope.form.processingInterval });
+                    interval = $interval(async () => {
+                        $scope.videoFrameUrl = VideoRestService.getFrameUrl();
+                        if ($scope.form.save) {
+                            $scope.dtInstance.reloadData();
+                        }
+                    }, $scope.form.processingInterval);
+                }, 1000);
+                $scope.start = true;
+            });
+        };
+
+        $scope.stop = () => {
+            VideoRestService.stop();
+            $interval.cancel(interval);
+            $scope.start = false;
         };
     }
 })();   
