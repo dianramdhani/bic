@@ -26,6 +26,7 @@ window.app = angular.module('BIC', ['ui.router', 'ngCookies', 'datatables']);
 // SERVICES
 require('../services/container-rest.service');
 require('../services/util.service');
+require('../services/video-rest.service');
 
 // ROUTES
 require('../routes/app.route');

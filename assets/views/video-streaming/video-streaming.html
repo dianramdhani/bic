@@ -7,3 +7,21 @@
         </ol>
     </nav>
 </div>
+<div class="row">
+    <div class="col-md-6">
+        <form name="formVideoStream" class="form-inline mg-b-10" ng-submit="toggle()">
+            <div class="form-group mg-r-20">
+                <label class="mg-r-10" for="path">Path</label>
+                <input type="text" class="form-control" id="path" name="path" required ng-model="form.path">
+            </div>
+            <div class="custom-control custom-switch mg-r-20">
+                <input type="checkbox" class="custom-control-input" id="save" name="save" ng-model="form.save">
+                <label class="custom-control-label" for="save">Save</label>
+            </div>
+            <button type="submit" class="btn"
+                ng-class="{ 'btn-primary': !start, 'btn-danger': start }">{{start? 'Stop': 'Start'}}</button>
+        </form>
+        <img class="img-fluid" ng-src="{{videoFrameUrl}}">
+    </div>
+    <div class="col-md-6"></div>
+</div>
