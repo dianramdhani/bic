@@ -42,3 +42,4 @@ require('../components/tr-loading/tr-loading');
 require('../views/user-container/user-container');
 require('../views/quality-verification/quality-verification');
 require('../views/quality-verification/image-loader/image-loader');
+require('../views/video-streaming/video-streaming');
