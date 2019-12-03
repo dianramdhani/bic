@@ -10,10 +10,12 @@
             controller: _,
         });
 
-    _.$inject = ['$scope', '$interval', '$compile', '$filter', '$timeout', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'VideoRestService', 'ContainerRestService', 'UtilService'];
-    function _($scope, $interval, $compile, $filter, $timeout, $http, DTOptionsBuilder, DTColumnBuilder, VideoRestService, ContainerRestService, UtilService) {
+    _.$inject = ['$scope', '$interval', '$compile', '$filter', '$timeout', '$element', 'DTOptionsBuilder', 'DTColumnBuilder', 'VideoRestService', 'ContainerRestService', 'UtilService'];
+    function _($scope, $interval, $compile, $filter, $timeout, $element, DTOptionsBuilder, DTColumnBuilder, VideoRestService, ContainerRestService, UtilService) {
         const
             delay = 500,
+            stringify = (o) => JSON.stringify(o).replace(/"/g, '@').replace(/\\n/g, '#'),
+            parse = (s) => JSON.parse(s.replace(/@/g, '"').replace(/#/, '\\n')),
             videoInit = () => {
                 $scope.start = true;
                 $scope.videoFrameUrl = '';
@@ -60,7 +62,7 @@
                     .withPaginationType('simple_numbers');
                 $scope.dtColumns = [
                     DTColumnBuilder.newColumn(null).withTitle('Image').notSortable()
-                        .renderWith((data, _, __, ___) => `<img src="${ContainerRestService.imageUrl({ id: data.id })}" style="height: 100px">`),
+                        .renderWith((data, _, __, ___) => `<img src="${ContainerRestService.imageUrl({ id: data.id })}" style="height: 100px" ng-click="openImg('${stringify(data)}')">`),
                     DTColumnBuilder.newColumn(null).withTitle('Date / Code').notSortable()
                         .renderWith((data, _, __, ___) => `
                             ${$filter('date')(data.date, 'medium')}
@@ -71,10 +73,12 @@
                 $scope.dtInstance = {};
             };
         let $ctrl = this,
-            interval;
+            interval,
+            modalViewImage;
         $ctrl.$onInit = () => {
             videoInit();
             tableInit();
+            $timeout(() => modalViewImage = $element.find('#modalViewImage'));
         };
 
         $scope.play = () => {
@@ -97,6 +101,12 @@
             VideoRestService.stop();
             $interval.cancel(interval);
             $scope.start = false;
+        };
+
+        $scope.openImg = (data) => {
+            $scope.imgView = parse(data);
+            $scope.imgView['imgUrl'] = ContainerRestService.imageUrl({ id: $scope.imgView.id });
+            modalViewImage.modal({ show: true });
         };
     }
 })();   
